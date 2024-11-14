@@ -30,6 +30,5 @@ Promise.all([initMSW(), domReady()]).then(() => {
   const apiClient = new ApiClient(API_URL);
   new ChoiceSelectModel();
   window.App.ChoiceSelectModel = ChoiceSelectModel;
-  new MapApp("store-map-markers");
-  apiClient.get(API_ENDPOINTS.marks.list).then((res) => console.debug(res));
+  new MapApp("store-map-markers", apiClient, API_ENDPOINTS);
 });

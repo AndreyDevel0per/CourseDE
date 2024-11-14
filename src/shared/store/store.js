@@ -27,11 +27,32 @@ export const createStore = (storageName) => {
               };
             });
           },
+          //добавить в стор метод для добавления списка меток
+          addMarkers: (newMarkers) => {
+            set((state) => {
+              const uniqueMarkers = newMarkers.filter(
+                (newMarker) =>
+                  !state.markers.some((m) => m?.id === newMarker.id)
+              );
+              return {
+                markers: [...state.markers, ...uniqueMarkers],
+              };
+            });
+          },
           removeMarker: (markerId) =>
             set((state) => ({
               markers: state.markers.filter((marker) => marker.id !== markerId),
             })),
+          //добавить в стор метод для удаления списка меток
+          removeMarkers: (markerIds) =>
+            set((state) => ({
+              markers: state.markers.filter(
+                (marker) => !markerIds.includes(marker.id)
+              ),
+            })),
           setFilters: (filters) => set({ activeFilters: filters }),
+          //добавить в стор метод для очистки фильтров.
+          clearFilters: () => set({ activeFilters: {} }),
         }),
         {
           name: storageName, // Используем переданное имя хранилища
