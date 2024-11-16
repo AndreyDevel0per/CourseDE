@@ -1,32 +1,33 @@
-import { StoreService } from "#shared/lib/services/StoreService";
+import { YandexMap } from "#shared/ui/Map/model";
 
 /**
  *
  */
 export class MapApp {
-  constructor(storageName, apiClient, API_ENDPOINTS) {
-    this.storeService = new StoreService(storageName);
+  constructor(storeService, apiClient, API_ENDPOINTS) {
+    this.storeService = storeService;
     this.apiClient = apiClient;
-    this.API_ENDPOINTS = API_ENDPOINTS;
-    this.subscribeForStoreService();
 
-    console.debug(
-      "Тут будем реализовывать логику нашего виджета, вот готовый стор сервис ->",
-      this.storeService
-    );
+    this.yandexMap = new YandexMap({
+      containerSelector: "#map1",
+      apiUrl: "https://api-maps.yandex.ru/2.1/?apikey",
+      apiKey: "fb0fc35c-8194-4428-82e5-fb1f701058f3",
+      lang: "ru_RU",
+      center: [55.751574, 37.573856],
+      zoom: 10,
+    });
 
     setTimeout(() => {
-      this.storeService.updateStore("addMarkers", [
-        { id: "9", value: "Marker 1" },
-        { id: "8", value: "Marker 2" },
-        { id: "7", value: "Marker 3" },
-      ]);
-      //заносим полученные метки в store
-      this.getMarks().then((marks) => {
-        this.storeService.updateStore("addMarkers", marks);
-      });
-      this.storeService.updateStore("removeMarkers", ["90", "91"]);
-    }, 3000);
+      this.yandexMap
+        .initMap()
+        .then(() => {
+          console.debug("Карта проинициализированна", this.yandexMap.instance);
+        })
+        .catch((e) => console.error(e));
+    }, 5000);
+
+    this.API_ENDPOINTS = API_ENDPOINTS;
+    this.subscribeForStoreService();
   }
 
   handleMarkersChanged() {
