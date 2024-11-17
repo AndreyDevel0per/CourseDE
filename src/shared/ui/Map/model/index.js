@@ -1,5 +1,8 @@
 import { getExternalScript } from "#shared/lib/utils/getExternalScript";
 
+/**
+ *
+ */
 export class YandexMap {
   constructor({
     containerSelector,
@@ -18,28 +21,33 @@ export class YandexMap {
     this.instance = null;
   }
 
-  initMap() {
-    return getExternalScript(`${this.apiUrl}=${this.apiKey}&lang=${this.lang}`)
-      .then(() => {
-        return new Promise((resolve, reject) => {
-          window.ymaps.ready(() => {
-            try {
-              this.instance = new window.ymaps.Map(
-                document.querySelector(this.containerSelector),
-                {
-                  center: this.center,
-                  zoom: this.zoom,
-                }
-              );
-              resolve(this.instance);
-            } catch (e) {
-              reject(e);
-            }
-          });
+  async initMap() {
+    try {
+      //wait for external script to load
+      await getExternalScript(
+        `${this.apiUrl}=${this.apiKey}&lang=${this.lang}`
+      );
+      //wait for map to load
+      await new Promise((resolve, reject) => {
+        window.ymaps.ready(() => {
+          try {
+            this.instance = new window.ymaps.Map(
+              document.querySelector(this.containerSelector),
+              {
+                center: this.center,
+                zoom: this.zoom,
+              }
+            );
+            resolve(this.instance);
+          } catch (e) {
+            reject(e);
+          }
         });
-      })
-      .catch((err) => {
-        console.error("Error occurred while loading API Yandex map:", err);
       });
+      //return map if init successfully
+      return this.instance;
+    } catch (error) {
+      console.error("Error occurred while loading API Yandex map:", error);
+    }
   }
 }

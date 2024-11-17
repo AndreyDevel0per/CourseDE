@@ -17,14 +17,12 @@ export class MapApp {
       zoom: 10,
     });
 
-    setTimeout(() => {
-      this.yandexMap
-        .initMap()
-        .then(() => {
-          console.debug("Карта проинициализированна", this.yandexMap.instance);
-        })
-        .catch((e) => console.error(e));
-    }, 5000);
+    this.yandexMap
+      .initMap()
+      .then(() => {
+        console.debug("Карта проинициализированна", this.yandexMap.instance);
+      })
+      .catch((e) => console.error(e, "!!!!"));
 
     this.API_ENDPOINTS = API_ENDPOINTS;
     this.subscribeForStoreService();
