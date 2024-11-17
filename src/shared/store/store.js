@@ -16,29 +16,42 @@ export const createStore = (storageName) => {
           setMarkers: (markers) => set({ markers }),
           addMarker: (marker) => {
             set((state) => {
-              // Проверка, есть ли уже маркер с таким ID
-              const exists = state.markers.some((m) => m?.id === marker.id);
-              if (exists) {
-                console.warn(`Marker with ID ${marker.id} already exists.`);
-                return state; // Не изменяем состояние, если маркер с таким ID уже существует
+              // Проверка, если маркер с таким ID уже существует, обновляем его
+              const updatedMarkers = state.markers.map((m) =>
+                m.id === marker.id ? { ...m, ...marker } : m
+              );
+              // Если маркер не найден, добавляем новый
+              if (updatedMarkers.every((m) => m.id !== marker.id)) {
+                updatedMarkers.push(marker);
               }
-              return {
-                markers: [...state.markers, marker], // Добавляем новый маркер
-              };
+              return { markers: updatedMarkers };
             });
           },
           //добавить в стор метод для добавления списка меток
           addMarkers: (newMarkers) => {
             set((state) => {
-              const uniqueMarkers = newMarkers.filter(
-                (newMarker) =>
-                  !state.markers.some((m) => m?.id === newMarker.id)
-              );
-              return {
-                markers: [...state.markers, ...uniqueMarkers],
-              };
+              // Для каждого маркера в списке проверяем, существует ли уже маркер с таким id
+              const updatedMarkers = [...state.markers];
+              newMarkers.forEach((marker) => {
+                // Если маркер с таким id уже существует, обновляем его
+                const markerIndex = updatedMarkers.findIndex(
+                  (m) => m.id === marker.id
+                );
+                if (markerIndex !== -1) {
+                  updatedMarkers[markerIndex] = {
+                    ...updatedMarkers[markerIndex],
+                    ...marker,
+                  };
+                } else {
+                  // Если маркера нет, добавляем новый
+                  updatedMarkers.push(marker);
+                }
+              });
+
+              return { markers: updatedMarkers };
             });
           },
+
           removeMarker: (markerId) =>
             set((state) => ({
               markers: state.markers.filter((marker) => marker.id !== markerId),
@@ -50,6 +63,7 @@ export const createStore = (storageName) => {
                 (marker) => !markerIds.includes(marker.id)
               ),
             })),
+
           setFilters: (filters) => set({ activeFilters: filters }),
           //добавить в стор метод для очистки фильтров.
           clearFilters: () => set({ activeFilters: {} }),

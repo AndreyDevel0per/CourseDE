@@ -1,10 +1,11 @@
+import { API_ENDPOINTS } from "#shared/config/constants";
 import { YandexMap } from "#shared/ui/Map/model";
 
 /**
  *
  */
 export class MapApp {
-  constructor(storeService, apiClient, API_ENDPOINTS) {
+  constructor(storeService, apiClient) {
     this.storeService = storeService;
     this.apiClient = apiClient;
 
@@ -19,13 +20,12 @@ export class MapApp {
 
     this.yandexMap
       .initMap()
-      .then(() => {
-        console.debug("Карта проинициализированна", this.yandexMap.instance);
-        this.yandexMap.addMark();
+      .then(async () => {
+        const marks = await this.getMarks();
+        this.storeService.updateStore("addMarkers", marks);
       })
       .catch((e) => console.error(e, "!!!!"));
 
-    this.API_ENDPOINTS = API_ENDPOINTS;
     this.subscribeForStoreService();
   }
 
@@ -54,7 +54,7 @@ export class MapApp {
   // в MapApp написать метод для получения информации по меткам с иcпользованием ApiClient  через msw и установке полученных меток в сторе.
   getMarks() {
     return this.apiClient
-      .get(this.API_ENDPOINTS.marks.list)
+      .get(API_ENDPOINTS.marks.list)
       .then((res) => res?.data?.marks)
       .catch((error) => {
         console.error("Error fetching marks:", error);
