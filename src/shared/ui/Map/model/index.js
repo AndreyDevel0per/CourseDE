@@ -1,3 +1,4 @@
+import { iconsPresets } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { getExternalScript } from "#shared/lib/utils/getExternalScript";
 
@@ -20,6 +21,7 @@ export class YandexMap {
     this.lang = lang;
     this.apiUrl = apiUrl;
     this.instance = null;
+    this.iconsPresets = iconsPresets;
   }
 
   #createMap() {
@@ -73,14 +75,42 @@ export class YandexMap {
   }
 
   @checkMapInstance
-  addMark() {
-    const myPlacemark = new window.ymaps.Placemark([55.7, 37.6], {
-      balloonContentHeader: "Однажды",
-      balloonContentBody: "В студеную зимнюю пору",
-      balloonContentFooter: "Мы пошли в гору",
-      hintContent: "Зимние происшествия",
+  addMark({ id, cords, type, onClick } = {}) {
+    // const myPlacemark = new window.ymaps.Placemark(cords);
+    // this.instance.geoObjects.add(myPlacemark);
+    const customLayout = window.ymaps.templateLayoutFactory.createClass(
+      `<div class="yandexMap__customPlacemark">
+        ${this.iconsPresets[type] ? this.iconsPresets[type] : type}
+      </div>`
+    );
+
+    const placemark = new window.ymaps.Placemark(
+      cords,
+      { id },
+      {
+        iconLayout: customLayout,
+        iconShape: { type: "Circle", coordinates: [0, 0], radius: 88 },
+      }
+    );
+
+    placemark.events.add("click", (event) => {
+      if (onClick && typeof onClick === "function") onClick(id, event);
     });
 
-    this.instance.geoObjects.add(myPlacemark);
+    this.instance.geoObjects.add(placemark);
+  }
+
+  @checkMapInstance
+  renderMarks(marks) {
+    marks.forEach((mark) => {
+      this.addMark({
+        id: mark.id,
+        cords: mark.cords,
+        type: mark.type,
+        onClick: (id, e) => {
+          console.debug("Клик по метке", id, e);
+        },
+      });
+    });
   }
 }

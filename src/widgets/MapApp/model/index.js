@@ -14,15 +14,21 @@ export class MapApp {
       apiUrl: "https://api-maps.yandex.ru/2.1/?apikey",
       apiKey: "fb0fc35c-8194-4428-82e5-fb1f701058f3",
       lang: "ru_RU",
-      center: [55.751574, 37.573856],
+      center: [56.5, 57.9],
       zoom: 10,
     });
 
     this.yandexMap
       .initMap()
       .then(async () => {
-        const marks = await this.getMarks();
-        this.storeService.updateStore("addMarkers", marks);
+        this.yandexMap.renderMarks(this.storeService.getMarkers()); //render marks from store
+        const g = () => {
+          setTimeout(async () => {
+            const marks = await this.getMarks();
+            this.storeService.updateStore("addMarkers", marks);
+          }, 2000);
+        };
+        g();
       })
       .catch((e) => console.error(e, "!!!!"));
 
@@ -31,6 +37,7 @@ export class MapApp {
 
   handleMarkersChanged() {
     console.debug("markers changed", this.storeService.getMarkers());
+    this.yandexMap.renderMarks(this.storeService.getMarkers());
   }
 
   handleFiltersChanged() {

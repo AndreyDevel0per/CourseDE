@@ -1,8 +1,8 @@
 export const listMarksMockResponce = {
   marks: [
     {
-      id: "12",
-      type: "11",
+      id: "11",
+      type: "1",
       cords: [56.5, 57.9],
     },
     {
