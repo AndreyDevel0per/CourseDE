@@ -1,3 +1,4 @@
+import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { getExternalScript } from "#shared/lib/utils/getExternalScript";
 
 /**
@@ -21,12 +22,17 @@ export class YandexMap {
     this.instance = null;
   }
 
-  createMap() {
+  #createMap() {
     this.instance = new window.ymaps.Map(
       document.querySelector(this.containerSelector),
       {
         center: this.center,
         zoom: this.zoom,
+        type: "yandex#map",
+        controls: [],
+      },
+      {
+        suppressMapOpenBlock: true,
       }
     );
     return this.instance;
@@ -35,7 +41,7 @@ export class YandexMap {
   async initMap() {
     try {
       if (window.ymaps) {
-        return this.createMap();
+        return this.#createMap();
       }
       //wait for external script to load
       await getExternalScript(
@@ -45,7 +51,7 @@ export class YandexMap {
       await new Promise((resolve, reject) => {
         window.ymaps.ready(() => {
           try {
-            resolve(this.createMap());
+            resolve(this.#createMap());
           } catch (e) {
             reject(e);
           }
@@ -56,5 +62,25 @@ export class YandexMap {
     } catch (error) {
       console.error("Error occurred while loading API Yandex map:", error);
     }
+  }
+
+  isExistMapInstance() {
+    if (!this.instance) {
+      console.warn("Карта не инициализированна");
+      return false;
+    }
+    return true;
+  }
+
+  @checkMapInstance
+  addMark() {
+    const myPlacemark = new window.ymaps.Placemark([55.7, 37.6], {
+      balloonContentHeader: "Однажды",
+      balloonContentBody: "В студеную зимнюю пору",
+      balloonContentFooter: "Мы пошли в гору",
+      hintContent: "Зимние происшествия",
+    });
+
+    this.instance.geoObjects.add(myPlacemark);
   }
 }

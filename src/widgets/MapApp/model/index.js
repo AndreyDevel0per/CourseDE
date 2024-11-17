@@ -21,6 +21,7 @@ export class MapApp {
       .initMap()
       .then(() => {
         console.debug("Карта проинициализированна", this.yandexMap.instance);
+        this.yandexMap.addMark();
       })
       .catch((e) => console.error(e, "!!!!"));
 
