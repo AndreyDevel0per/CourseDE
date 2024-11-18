@@ -1,4 +1,5 @@
 import { API_ENDPOINTS } from "#shared/config/constants";
+import { yandexMapCustomEventNames } from "#shared/ui/Map/config/constants";
 import { YandexMap } from "#shared/ui/Map/model";
 
 /**
@@ -30,9 +31,26 @@ export class MapApp {
         };
         g();
       })
-      .catch((e) => console.error(e, "!!!!"));
+      .catch((e) => console.error(e));
 
+    this.#bindYandexMapEvents();
     this.subscribeForStoreService();
+  }
+
+  async handleMarkerClick(e) {
+    const {
+      detail: { id, mark },
+    } = e;
+
+    try {
+      const res = await this.apiClient.get(API_ENDPOINTS.marks.detail, {
+        id: id,
+      });
+      const layout = this.yandexMap.getLayoutContentForBallon(res);
+      this.yandexMap.renderCustomBallon(id, mark, layout);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   handleMarkersChanged() {
@@ -59,7 +77,7 @@ export class MapApp {
   }
 
   // в MapApp написать метод для получения информации по меткам с иcпользованием ApiClient  через msw и установке полученных меток в сторе.
-  getMarks() {
+  async getMarks() {
     return this.apiClient
       .get(API_ENDPOINTS.marks.list)
       .then((res) => res?.data?.marks)
@@ -67,5 +85,11 @@ export class MapApp {
         console.error("Error fetching marks:", error);
         throw error;
       });
+  }
+
+  #bindYandexMapEvents() {
+    document.addEventListener(yandexMapCustomEventNames.markClicked, (e) => {
+      this.handleMarkerClick(e);
+    });
   }
 }
