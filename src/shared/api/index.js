@@ -11,14 +11,12 @@ export const handlers = [
     endpoint: API_ENDPOINTS.marks.list,
     data: listMarks,
   }),
-  getResponseMock({
-    type: "GET",
-    endpoint: `${API_ENDPOINTS.marks.detail}?1`,
-    data: markDetail["1"],
-  }),
-  getResponseMock({
-    type: "GET",
-    endpoint: `${API_ENDPOINTS.marks.detail}?2`,
-    data: markDetail["2"],
+  ...markDetail.map((markInfo) => {
+    return getResponseMock({
+      type: "GET",
+      endpoint: `${API_ENDPOINTS.marks.detail}`, // Убираем query-параметр из endpoint
+      queryParams: { id: markInfo.id }, // Передаем параметр id для проверки
+      data: markInfo,
+    });
   }),
 ];

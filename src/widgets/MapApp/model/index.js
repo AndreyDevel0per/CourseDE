@@ -46,8 +46,8 @@ export class MapApp {
       const res = await this.apiClient.get(API_ENDPOINTS.marks.detail, {
         id: id,
       });
-      const layout = this.yandexMap.getLayoutContentForBallon(res);
-      this.yandexMap.renderCustomBallon(id, mark, layout);
+      const info = this.yandexMap.getLayoutContentForBallon(res.data);
+      this.yandexMap.updateBallonContent(id, mark, info);
     } catch (e) {
       console.error(e);
     }
@@ -87,6 +87,7 @@ export class MapApp {
       });
   }
 
+  //слушаем событие клика по метке
   #bindYandexMapEvents() {
     document.addEventListener(yandexMapCustomEventNames.markClicked, (e) => {
       this.handleMarkerClick(e);

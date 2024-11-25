@@ -1,5 +1,5 @@
-import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
+import { createStore as create } from "zustand/vanilla";
 
 /**
  * Функция для создания Store с уникальным именем

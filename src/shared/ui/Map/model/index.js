@@ -1,3 +1,5 @@
+import Swiper from "swiper";
+import { Pagination } from "swiper/modules";
 import {
   iconsPresets,
   classNames as defaultClassNames,
@@ -33,88 +35,88 @@ export class YandexMap {
     this.classNames = classNames ?? defaultClassNames;
     this.currentBalloon = null;
     this.iconShapeCfg = iconShapeCfg ?? defaultIconShapeCfg;
+    this.attrs = {
+      ballon: "data-js-ballon",
+    };
   }
 
-  //внутренний контент
+  //внешняя обертка баллуна
+  @checkMapInstance
+  getBallonLayout() {
+    const ballonLayout = window.ymaps.templateLayoutFactory.createClass(
+      `<div class="${this.classNames.ballonLayout}">$[[options.contentLayout observeSize]]</div>`,
+      {
+        build: function () {
+          ballonLayout.superclass.build.call(this);
+        },
+        clear: function () {
+          ballonLayout.superclass.clear.call(this);
+        },
+      }
+    );
+    return ballonLayout;
+  }
+
+  //внутренний контент баллуна
+  @checkMapInstance
   getBallonContent({ id, children }) {
-    if (window.ymaps) {
-      const ballonContent = window.ymaps.templateLayoutFactory.createClass(
-        `<div class="${this.classNames.ballonContent}" data-js-ballon=${id}> 
+    const linkToCreateSwiperFn = this.createSwiper;
+    const ballonContent = window.ymaps.templateLayoutFactory.createClass(
+      `<div class="${this.classNames.ballonContent}" ${this.attrs.ballon}=${id}> 
             ${children}
         </div>`,
-        {
-          build: function () {
-            ballonContent.superclass.build.call(this);
-            // this.createSwiper(ballonId); TODO: доделать.
-          },
-          clear: function () {
-            ballonContent.superclass.clear.call(this);
-          },
-        }
-      );
-      return ballonContent;
-    }
-    throw new Error("ymaps not ready");
+      {
+        build: function () {
+          ballonContent.superclass.build.call(this);
+          linkToCreateSwiperFn(id);
+        },
+        clear: function () {
+          ballonContent.superclass.clear.call(this);
+        },
+      }
+    );
+    return ballonContent;
   }
 
-  createSwiper(ballonId) {
+  createSwiper(id) {
     try {
-      // const ballonContainer = document.querySelector(
-      //   `[data-js-ballon=${ballonId}`
-      // );
-      // const swiperEl = ballonContainer.querySelector(".swiper");
-      // new Swiper(swiperEl, {
-      //   direction: "vertical",
-      //   loop: true,
-      //   pagination: {
-      //     el: ".swiper-pagination",
-      //   },
-      //   navigation: {
-      //     nextEl: ".swiper-button-next",
-      //     prevEl: ".swiper-button-prev",
-      //   },
-      //   scrollbar: {
-      //     el: ".swiper-scrollbar",
-      //   },
-      // });
+      const ballonContainer = document.querySelector(
+        `[data-js-ballon="${id}"]`
+      );
+
+      const swiperEl = ballonContainer.querySelector(".swiper");
+      const swiperPagination =
+        ballonContainer.querySelector(".swiper-pagination");
+
+      if (swiperEl && swiperPagination) {
+        new Swiper(swiperEl, {
+          slidesPerView: 1,
+          direction: "horizontal",
+          modules: [Pagination],
+          pagination: {
+            el: swiperPagination,
+            clickable: true,
+          },
+        });
+      }
     } catch (e) {
       console.error(e);
     }
   }
 
-  //внешняя обертка
-  getBallonLayout() {
-    if (window.ymaps) {
-      const ballonLayout = window.ymaps.templateLayoutFactory.createClass(
-        `<div class="${this.classNames.ballonLayout}">$[[options.contentLayout observeSize]]</div>`,
-        {
-          build: function () {
-            ballonLayout.superclass.build.call(this);
-          },
-          clear: function () {
-            ballonLayout.superclass.clear.call(this);
-          },
-        }
-      );
-      return ballonLayout;
-    }
-    throw new Error("ymaps not ready");
-  }
-
   //верстка метки
+  @checkMapInstance
   getMarkerLayout(typeMarker) {
-    if (window.ymaps) {
-      const customLayout = window.ymaps.templateLayoutFactory.createClass(
-        `<div class="${this.classNames.mark}">
+    const customLayout = window.ymaps.templateLayoutFactory.createClass(
+      `<div class="${this.classNames.mark}">
          ${this.iconsPresets[typeMarker] ? this.iconsPresets[typeMarker] : typeMarker}
        </div>`
-      );
+    );
 
-      return customLayout;
-    }
-    throw new Error("ymaps not ready");
+    return customLayout;
   }
 
+  //создаем карту
   #createMap() {
     this.instance = new window.ymaps.Map(
       document.querySelector(this.containerSelector),
@@ -132,6 +134,7 @@ export class YandexMap {
     return this.instance;
   }
 
+  //инициализируем карту
   async initMap() {
     try {
       if (window.ymaps) {
@@ -158,6 +161,7 @@ export class YandexMap {
     }
   }
 
+  //для декоратора
   isExistMapInstance() {
     if (!this.instance) {
       console.warn("Карта не инициализированна");
@@ -166,19 +170,21 @@ export class YandexMap {
     return true;
   }
 
+  //создаем метку для рендера
   @checkMapInstance
   addMark({ id, cords, type: typeMarker, onClick } = {}) {
     const placemark = new window.ymaps.Placemark(
       cords,
       { id },
       {
-        balloonLayout: this.getBallonLayout(),
+        balloonLayout: this.getBallonLayout(), //внешняя разметка баллуна метки
+        //внутренняя разметка баллуна метки
         balloonContentLayout: this.getBallonContent({
           id,
           children: Spinner(),
         }),
         hasBalloon: true,
-        iconLayout: this.getMarkerLayout(typeMarker),
+        iconLayout: this.getMarkerLayout(typeMarker), //разметка метки
         iconShape: this.iconShapeCfg,
       }
     );
@@ -216,7 +222,8 @@ export class YandexMap {
     document.dispatchEvent(customEvent);
   }
 
-  renderCustomBallon(id, mark, info) {
+  //изменение баллуна при клике
+  updateBallonContent(id, mark, info) {
     mark.options.set(
       "balloonContentLayout",
       this.getBallonContent({
@@ -226,11 +233,33 @@ export class YandexMap {
     );
   }
 
+  //измененная верстка при клике
   getLayoutContentForBallon(info) {
-    console.debug("Вот здесь мы начинаем формировать верстку"); //TODO: ДЗ, сделать верстку балуна и вернуть ее
-    return "<p>Что-то будет</p>";
+    const {
+      type,
+      title,
+      address: { city, house, street },
+    } = info;
+    const slides = info.images
+      .map(
+        (image, index) =>
+          `<div class="swiper-slide"><img src="${image}" alt="${info.title} - Slide ${index + 1}"></div>`
+      )
+      .join("");
+
+    return `<div class="swiper">
+              <div class="swiper-wrapper">
+                ${slides}
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+            <h3>${title}</h3>
+            <div>${this.iconsPresets[type]}</div>
+            <p>${city},${street}, ${house}</p>
+            `;
   }
 
+  //рендерим метки
   @checkMapInstance
   renderMarks(marks) {
     marks.forEach((mark) => {
@@ -245,6 +274,7 @@ export class YandexMap {
     });
   }
 
+  //закрыть балун по клику на карту
   handleCloseCurrentBallon() {
     if (this.currentBalloon) {
       this.currentBalloon.balloon.close();
@@ -252,6 +282,7 @@ export class YandexMap {
     this.currentBalloon = null;
   }
 
+  //добавляем слушатель на клик по карте для закрытия баллуна
   #bindEvents() {
     this.instance.events.add("click", () => {
       this.handleCloseCurrentBallon(); //TODO: а надо ли? надо подумать
