@@ -34,6 +34,7 @@ export class YandexMap {
     this.iconsPresets = iconsPresets;
     this.classNames = classNames ?? defaultClassNames;
     this.currentBalloon = null;
+    this.currentMarkerIdOpen = null;
     this.iconShapeCfg = iconShapeCfg ?? defaultIconShapeCfg;
     this.attrs = {
       ballon: "data-js-ballon",
@@ -200,10 +201,12 @@ export class YandexMap {
       }
       // Обновляем ссылку на текущий открытый балун
       this.currentBalloon = placemark;
+      this.currentMarkerIdOpen = id;
     });
 
     placemark.events.add("balloonclose", () => {
       this.currentBalloon = null;
+      this.currentMarkerIdOpen = null;
     });
 
     this.instance.geoObjects.add(placemark);
@@ -246,14 +249,14 @@ export class YandexMap {
           `<div class="swiper-slide"><img src="${image}" alt="${info.title} - Slide ${index + 1}"></div>`
       )
       .join("");
-
+    //TODO накинуть стили
     return `<div class="swiper">
               <div class="swiper-wrapper">
                 ${slides}
               </div>
               <div class="swiper-pagination"></div>
             </div>
-            <h3>${title}</h3>
+            <h3 class="yandexMap__header">${title}</h3>
             <div>${this.iconsPresets[type]}</div>
             <p>${city},${street}, ${house}</p>
             `;
@@ -280,6 +283,25 @@ export class YandexMap {
       this.currentBalloon.balloon.close();
     }
     this.currentBalloon = null;
+    this.currentMarkerIdOpen = null;
+  }
+
+  //центрируем карту по координатам
+  @checkMapInstance
+  centerMapByCords(cords, zoom = 15) {
+    try {
+      this.instance.setCenter(cords, zoom);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  createCenterMarker() {
+    const mark = document.createElement("div");
+    mark.innerHTML;
+    return `
+    <div class="yandexMap__centerMarker">center</div>
+    `;
   }
 
   //добавляем слушатель на клик по карте для закрытия баллуна

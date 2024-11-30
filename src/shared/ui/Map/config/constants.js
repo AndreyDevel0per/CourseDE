@@ -9,7 +9,7 @@ export const classNames = {
 export const iconShapeCfg = {
   type: "Circle",
   coordinates: [0, 0],
-  radius: 88,
+  radius: 40,
 };
 
 export const iconsPresets = {
