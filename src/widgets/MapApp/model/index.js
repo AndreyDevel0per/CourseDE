@@ -28,7 +28,7 @@ export class MapApp {
       .then(async () => {
         this.yandexMap.renderMarks(this.storeService.getMarkers()); //render marks from store
         const marks = await this.getMarks();
-        this.storeService.updateStore("addMarkers", marks);
+        this.storeService.updateStore("setMarkers", marks);
       })
       .catch((e) => console.error(e));
 

@@ -25,16 +25,18 @@ export class YandexMap {
     iconShapeCfg,
   }) {
     this.containerSelector = containerSelector;
+    this.containerMap = document.querySelector(this.containerSelector);
     this.apiKey = apiKey;
     this.center = center;
     this.zoom = zoom;
     this.lang = lang;
     this.apiUrl = apiUrl;
     this.instance = null;
+    this.centerMarker = null;
     this.iconsPresets = iconsPresets;
     this.classNames = classNames ?? defaultClassNames;
-    this.currentBalloon = null;
-    this.currentMarkerIdOpen = null;
+    // this.currentBalloon = null;
+    // this.currentMarkerIdOpen = null;
     this.iconShapeCfg = iconShapeCfg ?? defaultIconShapeCfg;
     this.attrs = {
       ballon: "data-js-ballon",
@@ -131,6 +133,7 @@ export class YandexMap {
         suppressMapOpenBlock: true,
       }
     );
+    this.createCenterMarker();
     this.#bindEvents();
     return this.instance;
   }
@@ -187,26 +190,15 @@ export class YandexMap {
         hasBalloon: true,
         iconLayout: this.getMarkerLayout(typeMarker), //разметка метки
         iconShape: this.iconShapeCfg,
+        hideIconOnBalloonOpen: false,
       }
     );
 
     placemark.events.add("click", (event) => {
-      if (onClick && typeof onClick === "function") onClick(id, event);
-    });
-
-    placemark.events.add("balloonopen", () => {
-      // Если на карте уже открыт балун, закрываем его
-      if (this.currentBalloon) {
-        this.currentBalloon.balloon.close();
+      if (this.instance.balloon.isOpen()) {
+        return;
       }
-      // Обновляем ссылку на текущий открытый балун
-      this.currentBalloon = placemark;
-      this.currentMarkerIdOpen = id;
-    });
-
-    placemark.events.add("balloonclose", () => {
-      this.currentBalloon = null;
-      this.currentMarkerIdOpen = null;
+      if (onClick && typeof onClick === "function") onClick(id, event);
     });
 
     this.instance.geoObjects.add(placemark);
@@ -278,13 +270,13 @@ export class YandexMap {
   }
 
   //закрыть балун по клику на карту
-  handleCloseCurrentBallon() {
-    if (this.currentBalloon) {
-      this.currentBalloon.balloon.close();
-    }
-    this.currentBalloon = null;
-    this.currentMarkerIdOpen = null;
-  }
+  // handleCloseCurrentBallon() {
+  //   if (this.currentBalloon) {
+  //     this.currentBalloon.balloon.close();
+  //   }
+  //   this.currentBalloon = null;
+  //   this.currentMarkerIdOpen = null;
+  // }
 
   //центрируем карту по координатам
   @checkMapInstance
@@ -296,18 +288,24 @@ export class YandexMap {
     }
   }
 
+  //центральная метка на карте
+  @checkMapInstance
   createCenterMarker() {
-    const mark = document.createElement("div");
-    mark.innerHTML;
-    return `
-    <div class="yandexMap__centerMarker">center</div>
-    `;
+    try {
+      const centerMarker = document.createElement("div");
+      centerMarker.className = this.classNames["centerMarker"];
+      centerMarker.innerHTML = this.iconsPresets["centerMarker"];
+      this.containerMap.appendChild(centerMarker);
+      this.centerMarker = centerMarker;
+    } catch (e) {
+      console.error("Ошибка при добавлении центральной метки:", e);
+    }
   }
 
   //добавляем слушатель на клик по карте для закрытия баллуна
   #bindEvents() {
-    this.instance.events.add("click", () => {
-      this.handleCloseCurrentBallon(); //TODO: а надо ли? надо подумать
+    this.instance.events.add("click", (e) => {
+      this.instance.balloon.close();
     });
   }
 }
