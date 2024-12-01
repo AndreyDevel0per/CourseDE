@@ -120,3 +120,38 @@ export const markDetail = [
     ],
   },
 ];
+
+export const filerCfg = {
+  inputs: {
+    search: {
+      value: null,
+      isChecked: "null",
+      isDisabled: "null",
+    },
+    bars: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+    restaurant: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+    trk: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+    theatre: {
+      value: null,
+      isChecked: true,
+      isDisabled: false,
+    },
+    cinema: {
+      value: null,
+      isChecked: false,
+      isDisabled: false,
+    },
+  },
+};

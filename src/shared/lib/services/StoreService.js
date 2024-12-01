@@ -12,6 +12,7 @@ export class StoreService {
       setMarkers: (payload) => this.store.getState().setMarkers(payload),
       removeMarker: (payload) => this.store.getState().removeMarker(payload),
       removeMarkers: (payload) => this.store.getState().removeMarkers(payload),
+      setFilters: (payload) => this.store.getState().setFilters(payload),
       clearFilters: (payload) => this.store.getState().clearFilters(payload),
     };
   }

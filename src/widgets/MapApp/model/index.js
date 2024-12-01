@@ -28,6 +28,8 @@ export class MapApp {
       .then(async () => {
         this.yandexMap.renderMarks(this.storeService.getMarkers()); //render marks from store
         const marks = await this.getMarks();
+        const filters = await this.getFiltersCfg();
+        this.storeService.updateStore("setFilters", filters);
         this.storeService.updateStore("setMarkers", marks);
       })
       .catch((e) => console.error(e));
@@ -59,7 +61,7 @@ export class MapApp {
   }
 
   handleFiltersChanged() {
-    console.debug("markers changed", this.storeService.getFilters());
+    console.debug("filters changed", this.storeService.getFilters());
   }
 
   //запрос для центрирования карты
@@ -106,6 +108,12 @@ export class MapApp {
         console.error("Error fetching marks:", error);
         throw error;
       });
+  }
+
+  async getFiltersCfg() {
+    return this.apiClient
+      .get(API_ENDPOINTS.config.list)
+      .then((res) => res?.data);
   }
 
   //слушаем событие клика по метке
