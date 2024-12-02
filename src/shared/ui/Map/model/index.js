@@ -33,6 +33,7 @@ export class YandexMap {
     this.apiUrl = apiUrl;
     this.instance = null;
     this.centerMarker = null;
+    this.hint = null;
     this.iconsPresets = iconsPresets;
     this.classNames = classNames ?? defaultClassNames;
     this.iconShapeCfg = iconShapeCfg ?? defaultIconShapeCfg;
@@ -131,7 +132,11 @@ export class YandexMap {
         suppressMapOpenBlock: true,
       }
     );
-    this.createCenterMarker();
+    this.showHint();
+    setTimeout(() => {
+      this.hideHint();
+      this.createCenterMarker();
+    }, 3000);
     this.#bindEvents();
     return this.instance;
   }
@@ -289,6 +294,19 @@ export class YandexMap {
     } catch (e) {
       console.error("Ошибка при добавлении центральной метки:", e);
     }
+  }
+
+  showHint() {
+    const hint = document.createElement("div");
+    hint.className = this.classNames["hint"];
+    hint.innerHTML = this.iconsPresets["centerMarker"];
+    this.containerMap.appendChild(hint);
+    this.hint = hint;
+  }
+
+  hideHint() {
+    this.hint.className = this.classNames["hidden"];
+    this.hint = null;
   }
 
   //добавляем слушатель на клик по карте для закрытия баллуна

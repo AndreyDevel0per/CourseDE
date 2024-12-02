@@ -5,6 +5,8 @@ export const classNames = {
   ballonLayout: "yandexMap__ballonLayout",
   mark: "yandexMap__mark",
   centerMarker: "yandexMap__centerMarker",
+  hint: "yandexMap__hint",
+  hidden: "hidden",
 };
 
 export const iconShapeCfg = {

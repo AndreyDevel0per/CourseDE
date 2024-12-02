@@ -5,6 +5,8 @@
   --yandexMapBallonContentBgColor: var(--colorWhite);
   --yandexMapBallonLayoutPd: 2px;
   position: relative;
+  min-width: 175.875rem;
+  min-height: 82.25rem;
 
   &__mark {
     display: flex;
@@ -47,4 +49,20 @@
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
+
+  &__hint {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 54rem;
+    height: 25.25rem;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 2rem;
+    background-color: rgb(175, 20, 20);
+  }
+}
+
+.hidden {
+  display: none;
 }
