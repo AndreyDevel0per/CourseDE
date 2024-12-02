@@ -35,8 +35,6 @@ export class YandexMap {
     this.centerMarker = null;
     this.iconsPresets = iconsPresets;
     this.classNames = classNames ?? defaultClassNames;
-    // this.currentBalloon = null;
-    // this.currentMarkerIdOpen = null;
     this.iconShapeCfg = iconShapeCfg ?? defaultIconShapeCfg;
     this.attrs = {
       ballon: "data-js-ballon",
@@ -122,7 +120,7 @@ export class YandexMap {
   //создаем карту
   #createMap() {
     this.instance = new window.ymaps.Map(
-      document.querySelector(this.containerSelector),
+      this.containerMap,
       {
         center: this.center,
         zoom: this.zoom,
@@ -214,7 +212,7 @@ export class YandexMap {
       },
     });
 
-    document.dispatchEvent(customEvent);
+    this.containerMap.dispatchEvent(customEvent);
   }
 
   //изменение баллуна при клике
@@ -268,15 +266,6 @@ export class YandexMap {
       });
     });
   }
-
-  //закрыть балун по клику на карту
-  // handleCloseCurrentBallon() {
-  //   if (this.currentBalloon) {
-  //     this.currentBalloon.balloon.close();
-  //   }
-  //   this.currentBalloon = null;
-  //   this.currentMarkerIdOpen = null;
-  // }
 
   //центрируем карту по координатам
   @checkMapInstance

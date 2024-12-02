@@ -121,7 +121,7 @@ export const markDetail = [
   },
 ];
 
-export const filerCfg = {
+export const filterCfg = {
   inputs: {
     search: {
       value: null,

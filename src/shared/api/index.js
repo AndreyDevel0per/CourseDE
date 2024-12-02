@@ -3,7 +3,7 @@ import { API_ENDPOINTS } from "../config/constants.js";
 import {
   listMarksMockResponce as listMarks,
   markDetail,
-  filerCfg,
+  filterCfg,
 } from "#widgets/MapApp/api/mockData.js";
 
 export const handlers = [
@@ -23,6 +23,6 @@ export const handlers = [
   getResponseMock({
     type: "GET",
     endpoint: API_ENDPOINTS.config.list,
-    data: filerCfg,
+    data: filterCfg,
   }),
 ];

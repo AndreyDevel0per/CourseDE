@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "#shared/config/constants";
 import { getDebouncedFn } from "#shared/lib/utils";
+import { FilterManager } from "#shared/ui/Filter/model";
 import { yandexMapCustomEventNames } from "#shared/ui/Map/config/constants";
 import { YandexMap } from "#shared/ui/Map/model";
 
@@ -23,13 +24,16 @@ export class MapApp {
       zoom: 10,
     });
 
+    this.loadAndUpdateFilters();
+    this.filterManager = new FilterManager({
+      containerSelector: `[data-js-filter="1"]`,
+      onUpdate: this.handleFilterChange,
+    });
     this.yandexMap
       .initMap()
       .then(async () => {
         this.yandexMap.renderMarks(this.storeService.getMarkers()); //render marks from store
         const marks = await this.getMarks();
-        const filters = await this.getFiltersCfg();
-        this.storeService.updateStore("setFilters", filters);
         this.storeService.updateStore("setMarkers", marks);
       })
       .catch((e) => console.error(e));
@@ -55,12 +59,12 @@ export class MapApp {
     }
   }
 
-  handleMarkersChanged() {
+  handleMarkersChangedInStore() {
     console.debug("markers changed", this.storeService.getMarkers());
     this.yandexMap.renderMarks(this.storeService.getMarkers());
   }
 
-  handleFiltersChanged() {
+  handleFiltersChangedInStore() {
     console.debug("filters changed", this.storeService.getFilters());
   }
 
@@ -87,16 +91,34 @@ export class MapApp {
 
   subscribeForStoreService() {
     this.markerSubscription = this.storeService.subscribeToMarkers(() => {
-      this.handleMarkersChanged();
+      this.handleMarkersChangedInStore();
     });
     this.filterSubscription = this.storeService.subscribeToFilters(() => {
-      this.handleFiltersChanged();
+      this.handleFiltersChangedInStore();
     });
   }
 
   unsubscribeFromStoreService() {
     this.markerSubscription?.();
     this.subscribeOnStoreChange?.();
+  }
+
+  handleFilterChange(changeData) {
+    console.debug(
+      "обращаться к стору и обновлять его данные активгых фильтров"
+    );
+  }
+
+  loadAndUpdateFilters() {
+    (async () => {
+      try {
+        const filters = await this.getFiltersCfg();
+        this.storeService.updateStore("setFilters", filters);
+        this.filterManager.applyFilters(filters);
+      } catch (error) {
+        console.error("Ошибка при получении конфигурации фильтров:", error);
+      }
+    })();
   }
 
   // в MapApp написать метод для получения информации по меткам с иcпользованием ApiClient  через msw и установке полученных меток в сторе.
@@ -118,9 +140,12 @@ export class MapApp {
 
   //слушаем событие клика по метке
   #bindYandexMapEvents() {
-    document.addEventListener(yandexMapCustomEventNames.markClicked, (e) => {
-      this.handleMarkerClick(e);
-    });
+    this.yandexMap?.containerMap?.addEventListener(
+      yandexMapCustomEventNames.markClicked,
+      (e) => {
+        this.handleMarkerClick(e);
+      }
+    );
   }
 
   #bindEvents() {
