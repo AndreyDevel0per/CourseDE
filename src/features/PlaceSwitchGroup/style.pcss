@@ -1,6 +1,50 @@
 .placeSwitchGroup {
+  --placeSwitchGroupInputWidth: 51rem;
+  --placeSwitchGroupInputHeight: 6rem;
+  --inputBgColor: var(--colorWhiteSmoke);
+  --inputFontSize: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  /* margin-top: 19rem;
+  margin-bottom: 2rem; */
+
+  margin: 19rem 0 3rem 17.25rem;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__input-container {
+    position: relative;
+    margin-right: 4.125rem;
+  }
+
+  &__icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    top: 1.5rem;
+    bottom: 0;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+  }
+
+  &__icon svg {
+    margin: auto;
+  }
+
+  &__input {
+    width: var(--placeSwitchGroupInputWidth);
+    height: var(--placeSwitchGroupInputHeight);
+    background-color: var(--inputBgColor);
+    padding-right: 2rem;
+    border-radius: 1rem;
+    font-size: var(--inputFontSize);
+    padding-left: 2rem;
+  }
 }
