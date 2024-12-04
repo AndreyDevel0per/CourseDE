@@ -11,6 +11,7 @@
   --swithTypeDisplay: inline-flex;
   --switchFlexDirection: row;
   --switchGap: 1rem;
+  --labelFontSize: 2rem;
   position: relative;
   display: var(--swithTypeDisplay);
   align-items: center;
@@ -20,6 +21,10 @@
 
   &:has(&__label:empty) {
     --switchGap: 0;
+  }
+
+  &__label {
+    font-size: var(--labelFontSize);
   }
 
   &__slider {

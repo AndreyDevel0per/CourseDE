@@ -24,6 +24,7 @@ export const PlaceSwitchGroup = ({
       ${Switch({
         label: label,
         extraClasses: ["switch--isRightLabel"],
+        extraAttrs: [{ name: "style", value: "padding-right:4rem" }],
         extraInputAttrs: [
           { name: "name", value: name },
           { name: "checked", value: checked.toString() },
