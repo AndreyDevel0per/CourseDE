@@ -10,7 +10,7 @@ import {
   MusicIcon,
   TheatreIcon,
 } from "#shared/ui/Icons/index";
-import { Switch } from "#shared/ui/Switch/index";
+import { Map } from "#shared/ui/Map/ui/Map";
 
 /**
  * Страница приложения
@@ -29,7 +29,7 @@ const IndexPage = () => `
       </header>
       <main>
         ${PlaceSwitchGroup()}
-        <div id="map1" class="yandexMap"></div>
+        ${Map()}
       </main>
     </body>
   </html>
