@@ -1,15 +1,22 @@
 .placeSwitchGroup {
   --placeSwitchGroupInputWidth: 51rem;
   --placeSwitchGroupInputHeight: 6rem;
+  --placeSwitchGroupMargin: 19rem 0 3rem 17.25rem;
+  --inputContainerMarginRight: 4.125rem;
   --inputBgColor: var(--colorWhiteSmoke);
   --inputFontSize: 2rem;
+  --inputPaddingRight: 5.5rem;
+  --inputPaddingLeft: 2rem;
+  --inputBorderRadius: 1rem;
+  --iconTop: 1.5rem;
+  --iconRight: 2rem;
+  --iconWidth: 3rem;
+  --iconHeight: 3rem;
+  --iconCursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* margin-top: 19rem;
-  margin-bottom: 2rem; */
-
-  margin: 19rem 0 3rem 17.25rem;
+  margin: var(--placeSwitchGroupMargin);
 
   &__container {
     display: flex;
@@ -17,21 +24,21 @@
     align-items: center;
   }
 
-  &__input-container {
+  &__inputContainer {
     position: relative;
-    margin-right: 4.125rem;
+    margin-right: var(--inputContainerMarginRight);
   }
 
   &__icon {
     position: absolute;
     display: flex;
     align-items: center;
-    top: 1.5rem;
+    top: var(--iconTop);
     bottom: 0;
-    right: 2rem;
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
+    right: var(--iconRight);
+    width: var(--iconWidth);
+    height: var(--iconHeight);
+    cursor: var(--iconCursor);
   }
 
   &__icon svg {
@@ -42,9 +49,9 @@
     width: var(--placeSwitchGroupInputWidth);
     height: var(--placeSwitchGroupInputHeight);
     background-color: var(--inputBgColor);
-    padding-right: 2rem;
-    border-radius: 1rem;
+    padding-right: var(--inputPaddingRight);
+    border-radius: var(--inputBorderRadius);
     font-size: var(--inputFontSize);
-    padding-left: 2rem;
+    padding-left: var(--inputPaddingLeft);
   }
 }

@@ -39,7 +39,7 @@ export const PlaceSwitchGroup = ({
   return `
     <div class="placeSwitchGroup ${extraClasses.join(" ")}" ${getGeneratedAttrs(extraAttrs)}>
       <div class="placeSwitchGroup__container" data-js-filter="marks">
-        <div class="placeSwitchGroup__input-container">
+        <div class="placeSwitchGroup__inputContainer">
           <input type="text" placeholder="Введите адрес" class="placeSwitchGroup__input" name="search" data-js-filter-item="search" data-js-filter-parent-name="marks"/>
           <span class="placeSwitchGroup__icon">
             ${SearchIcon({ iconColor: "var(--colorCadeyGray)" })}
