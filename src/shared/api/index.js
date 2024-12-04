@@ -1,7 +1,7 @@
 import { getResponseMock } from "./lib/index.js";
 import { API_ENDPOINTS } from "../config/constants.js";
 import {
-  listMarksMockResponce as listMarks,
+  listMarksMockResponse as listMarks,
   markDetail,
   filterCfg,
 } from "#widgets/MapApp/api/mockData.js";

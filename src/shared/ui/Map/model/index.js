@@ -260,6 +260,7 @@ export class YandexMap {
   //рендерим метки
   @checkMapInstance
   renderMarks(marks) {
+    this.clearMap();
     marks.forEach((mark) => {
       this.addMark({
         id: mark.id,
@@ -270,6 +271,10 @@ export class YandexMap {
         },
       });
     });
+  }
+
+  clearMap() {
+    this.instance.geoObjects.removeAll();
   }
 
   //центрируем карту по координатам

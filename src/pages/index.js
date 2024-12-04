@@ -1,3 +1,4 @@
+import { PlaceSwitchGroup } from "#features/PlaceSwitchGroup";
 import { Button } from "#shared/ui/Button/index";
 import { CustomSelect } from "#shared/ui/CustomSelect/index";
 import {
@@ -155,8 +156,8 @@ const IndexPage = () => `
             },
           })}
         </div>
+        ${PlaceSwitchGroup()}
         <div id="map1" class="yandexMap"></div>
-        <input type="text" id="searchAddress" />
       </main>
     </body>
   </html>

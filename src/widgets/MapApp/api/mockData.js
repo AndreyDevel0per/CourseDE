@@ -1,30 +1,10 @@
-export const listMarksMockResponce = {
+export const listMarksMockResponse = {
   marks: [
-    {
-      id: "1",
-      type: "1",
-      cords: [56.5, 57.9],
-    },
-    {
-      id: "2",
-      type: "2",
-      cords: [55.5, 57.9],
-    },
-    {
-      id: "3",
-      type: "3",
-      cords: [54.5, 57.9],
-    },
-    {
-      id: "4",
-      type: "4",
-      cords: [53.5, 57.9],
-    },
-    {
-      id: "5",
-      type: "5",
-      cords: [52.5, 57.9],
-    },
+    { id: "1", type: "bars", cords: [53.5, 58.9] },
+    { id: "2", type: "restaurant", cords: [54.5, 57.9] },
+    { id: "3", type: "club", cords: [53.5, 57.9] },
+    { id: "4", type: "theatre", cords: [52.5, 57.9] },
+    { id: "5", type: "cinema", cords: [51.5, 57.9] },
   ],
 };
 
@@ -32,7 +12,7 @@ export const markDetail = [
   {
     id: "1",
     title: "Al Capone",
-    type: "1",
+    type: "bars",
     address: {
       city: "Челябинск",
       house: "12a",
@@ -50,7 +30,7 @@ export const markDetail = [
   {
     id: "2",
     title: "Al Capone 2",
-    type: "2",
+    type: "restaurant",
     address: {
       city: "Челябинск 2",
       house: "12a",
@@ -68,7 +48,7 @@ export const markDetail = [
   {
     id: "3",
     title: "Al Capone 2",
-    type: "3",
+    type: "club",
     address: {
       city: "Челябинск 2",
       house: "12a",
@@ -86,7 +66,7 @@ export const markDetail = [
   {
     id: "4",
     title: "Al Capone 3",
-    type: "4",
+    type: "theatre",
     address: {
       city: "Челябинск 2",
       house: "12a",
@@ -104,7 +84,7 @@ export const markDetail = [
   {
     id: "5",
     title: "Al Capone 4",
-    type: "5",
+    type: "cinema",
     address: {
       city: "Челябинск 2",
       house: "12a",
@@ -138,7 +118,7 @@ export const filterCfg = {
       isChecked: false,
       isDisabled: false,
     },
-    trk: {
+    club: {
       value: null,
       isChecked: false,
       isDisabled: false,
