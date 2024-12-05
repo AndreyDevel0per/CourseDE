@@ -1,5 +1,6 @@
 import "./styles.js";
 import { API_URL } from "#shared/config/constants";
+import { ModalManager } from "#shared/lib/plugins/modalManager.js";
 import { ApiClient } from "#shared/lib/services/ApiClient.js";
 import { StoreService } from "#shared/lib/services/StoreService.js";
 import { ChoiceSelectModel } from "#shared/ui/CustomSelect/model/index.js";
@@ -31,4 +32,16 @@ Promise.all([initMSW(), domReady()]).then(() => {
   new ChoiceSelectModel();
   window.App.ChoiceSelectModel = ChoiceSelectModel;
   new MapApp(new StoreService("mapAppStore"), new ApiClient(API_URL));
+
+  setTimeout(() => {
+    const modalManager = ModalManager.getInstance({
+      animationClass: "slide",
+    });
+
+    modalManager.openConfirmModal({
+      message: "Вы уверены?",
+      onConfirm: () => console.debug("Подтверждено!"),
+      onCancel: () => console.debug("Отменено!"),
+    });
+  }, 2000);
 });
