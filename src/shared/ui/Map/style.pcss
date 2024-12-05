@@ -1,19 +1,34 @@
-/* stylelint-disable media-feature-range-notation */
 .yandexMap {
   --yandexMapWidthPlacemark: 4.625rem;
   --yandexMapBallonLayoutWidth: 37.5rem;
   --yandexMapBallonLayoutMinHeight: 48.25rem;
   --yandexMapBallonContentBgColor: var(--colorWhite);
   --yandexMapBallonLayoutPd: 2px;
+  --yandexMapHintFontColor: var(--colorWhite);
+  --yandexMapWidth: 175.875rem;
+  --yandexMapHeight: 82.25rem;
+  --yandexMapMarginLeft: 16.875rem;
+  --yandexMapBorderRadius: 5rem;
+  --yandexMapBallonContentWidth: 37.5rem;
+  --ynadexMapFontSize: 2.5rem;
+  --yandexMapHintWidth: 54rem;
+  --yandexMapHintHeight: 25.25rem;
+  --yandexMapHintBorderRadius: 2rem;
+  --yandexMapHintBgColor: rgba(0, 0, 0, 0.5);
+  --yandexMapHintSvgWidth: 4.75rem;
+  --yandexMapHintSvgPb: 1.875rem;
+  --yandexMapTextWidth: 39.5rem;
+  --yandexMapLineHeight: 3rem;
   position: relative;
-  width: 175.875rem;
-  height: 82.25rem;
-  margin-left: 16.875rem;
-  border-radius: 5rem;
+  width: var(--yandexMapWidth);
+  height: var(--yandexMapHeight);
+  margin-left: var(--yandexMapMarginLeft);
+  border-radius: var(--yandexMapBorderRadius);
   overflow: hidden;
 
+  /* stylelint-disable-next-line media-feature-range-notation */
   @media (min-width: 1024px) and (max-width: 1540px) {
-    width: 100rem;
+    width: 130rem;
     margin-left: 8rem;
   }
 
@@ -42,11 +57,11 @@
   }
 
   &__ballonContent {
-    max-width: 37.5rem;
+    max-width: var(--yandexMapBallonContentWidth);
   }
 
   &__header {
-    font-size: 20px;
+    font-size: var(--ynadexMapFontSize);
   }
 
   &__centerMarker {
@@ -63,15 +78,40 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 54rem;
-    height: 25.25rem;
+    width: var(--yandexMapHintWidth);
+    height: var(--yandexMapHintHeight);
     transform: translate(-50%, -50%);
     pointer-events: none;
-    border-radius: 2rem;
-    background-color: rgb(175, 20, 20);
+    border-radius: var(--yandexMapHintBorderRadius);
+    background: var(--yandexMapHintBgColor);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--yandexMapHintFontColor);
+    padding: 2.5rem;
+    box-sizing: border-box;
   }
-}
 
-.hidden {
-  display: none;
+  &__hint svg {
+    margin-bottom: var(--yandexMapHintSvgPb);
+    width: var(--yandexMapHintSvgWidth);
+  }
+
+  &__text {
+    max-width: var(--yandexMapTextWidth);
+  }
+
+  &__text h3 {
+    font-size: var(--ynadexMapFontSize);
+    font-weight: 700;
+    line-height: var(--yandexMapLineHeight);
+    margin-bottom: 1rem;
+  }
+
+  &__text span {
+    font-size: var(--ynadexMapFontSize);
+    line-height: var(--yandexMapLineHeight);
+  }
 }

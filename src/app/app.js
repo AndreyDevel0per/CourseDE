@@ -33,15 +33,15 @@ Promise.all([initMSW(), domReady()]).then(() => {
   window.App.ChoiceSelectModel = ChoiceSelectModel;
   new MapApp(new StoreService("mapAppStore"), new ApiClient(API_URL));
 
-  setTimeout(() => {
-    const modalManager = ModalManager.getInstance({
-      animationClass: "slide",
-    });
+  // setTimeout(() => {
+  //   const modalManager = ModalManager.getInstance({
+  //     animationClass: "slide",
+  //   });
 
-    modalManager.openConfirmModal({
-      message: "Вы уверены?",
-      onConfirm: () => console.debug("Подтверждено!"),
-      onCancel: () => console.debug("Отменено!"),
-    });
-  }, 2000);
+  //   modalManager.openConfirmModal({
+  //     message: "Вы уверены?",
+  //     onConfirm: () => console.debug("Подтверждено!"),
+  //     onCancel: () => console.debug("Отменено!"),
+  //   });
+  // }, 2000);
 });
