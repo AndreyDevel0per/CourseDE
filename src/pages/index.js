@@ -1,15 +1,4 @@
 import { PlaceSwitchGroup } from "#features/PlaceSwitchGroup";
-import { Button } from "#shared/ui/Button/index";
-import { CustomSelect } from "#shared/ui/CustomSelect/index";
-import {
-  CheckIcon,
-  CancelIcon,
-  BarIcon,
-  CinemaIcon,
-  RestIcon,
-  MusicIcon,
-  TheatreIcon,
-} from "#shared/ui/Icons/index";
 import { Map } from "#shared/ui/Map/ui/Map";
 
 /**
@@ -31,6 +20,14 @@ const IndexPage = () => `
         ${PlaceSwitchGroup()}
         ${Map()}
       </main>
+      <div style="display: none">
+        <div id="modalSuccess">
+            <p>Успешно!</p>
+        </div>
+        <div id="modalError">
+          <p>Не успешно!</p>
+        </div>
+      </div>
     </body>
   </html>
 `;

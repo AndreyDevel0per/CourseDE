@@ -3,7 +3,7 @@ import { Button } from "#shared/ui/Button";
 import { CancelIcon, CheckIcon } from "#shared/ui/Icons";
 
 /**
- * Компонент свитч - кнопки
+ * Компонент модалки подтверждения
  * @return {string}
  */
 export const ConfirmModal = ({

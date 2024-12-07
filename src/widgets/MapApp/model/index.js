@@ -1,6 +1,6 @@
+import { FilterManager } from "#features/Filter/model";
 import { API_ENDPOINTS } from "#shared/config/constants";
 import { getDebouncedFn } from "#shared/lib/utils";
-import { FilterManager } from "#features/Filter/model";
 import { yandexMapCustomEventNames } from "#shared/ui/Map/config/constants";
 import { YandexMap } from "#shared/ui/Map/model";
 

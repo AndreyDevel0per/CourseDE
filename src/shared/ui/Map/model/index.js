@@ -136,7 +136,7 @@ export class YandexMap {
     setTimeout(() => {
       this.hideHint();
       this.createCenterMarker();
-    }, 300000);
+    }, 5000);
     this.#bindEvents();
     return this.instance;
   }
@@ -302,18 +302,21 @@ export class YandexMap {
   }
 
   showHint() {
-    const hint = document.createElement("div");
-    hint.className = this.classNames["hint"];
-    // hint.innerHTML = this.iconsPresets["centerMarker"];
-    hint.innerHTML = `
+    try {
+      const hint = document.createElement("div");
+      hint.className = this.classNames["hint"];
+      hint.innerHTML = `
       ${this.iconsPresets["centerMarker"]}
       <div class="yandexMap__text">
         <h3>Адрес можно выбрать на карте</h3>
         <span>Перетаскивайте метку или кликайте по карте</span>
       </div>
-    `;
-    this.containerMap.appendChild(hint);
-    this.hint = hint;
+      `;
+      this.containerMap.appendChild(hint);
+      this.hint = hint;
+    } catch (e) {
+      console.error("Ошибка при создании подсказки", e);
+    }
   }
 
   hideHint() {
