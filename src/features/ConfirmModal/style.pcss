@@ -1,8 +1,28 @@
 .confirmModal {
+  --modalFontSize: 2.5rem;
+  --modalLineHeight: 3rem;
+  --modalWidth: 57.125rem;
+  --modalHeight: 22.5rem;
+  --modalBorderRadius: 2rem;
+  --modalGap: 2rem;
+  --modalPadding: 2rem 0 6rem 2rem;
   color: var(--colorBlack);
+  min-width: var(--modalWidth);
+  min-height: var(--modalHeight);
+  border-radius: var(--modalBorderRadius);
+  text-align: center;
 
   &__title {
-    font-size: 2.5rem;
+    font-size: var(--modalFontSize);
     font-weight: 700;
+    width: fit-content;
+    line-height: var(--modalLineHeight);
+    padding: var(--modalPadding);
+  }
+
+  &__buttons {
+    display: flex;
+    gap: var(--modalGap);
+    justify-content: center;
   }
 }
