@@ -7,6 +7,7 @@ import {
   iconShapeCfg as defaultIconShapeCfg,
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
+import { DeleteMarkBtn } from "#features/Marks/DeleteMark/index.js";
 import { getExternalScript } from "#shared/lib/utils/getExternalScript";
 import { Spinner } from "#shared/ui/Spinner/index.js";
 
@@ -232,7 +233,7 @@ export class YandexMap {
   }
 
   //измененная верстка при клике
-  getLayoutContentForBallon(info) {
+  getLayoutContentForBallon(id, info) {
     const {
       type,
       title,
@@ -244,7 +245,7 @@ export class YandexMap {
           `<div class="swiper-slide"><img src="${image}" alt="${info.title} - Slide ${index + 1}"></div>`
       )
       .join("");
-    //TODO накинуть стили
+    //TODO накинуть стили и вынести в отдельный entities/ballon
     return `<div class="swiper">
               <div class="swiper-wrapper">
                 ${slides}
@@ -254,6 +255,7 @@ export class YandexMap {
             <h3 class="yandexMap__header">${title}</h3>
             <div>${this.iconsPresets[type]}</div>
             <p>${city},${street}, ${house}</p>
+            ${DeleteMarkBtn({ markId: id })}
             `;
   }
 

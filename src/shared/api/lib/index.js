@@ -30,6 +30,10 @@ function getResponseMock({ type, resp, data, endpoint }) {
   switch (method) {
     case HttpMethods.POST:
       return http.post(url, resolver);
+    case HttpMethods.DELETE:
+      return http.delete(url, resolver);
+    case HttpMethods.PUT:
+      return http.put(url, resolver);
     default:
       return http.get(url, resolver);
   }

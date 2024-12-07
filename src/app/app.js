@@ -1,6 +1,6 @@
 import "./styles.js";
+import { DeleteMarkModel } from "#features/Marks/DeleteMark/model/index.js";
 import { API_URL } from "#shared/config/constants";
-import { ModalManager } from "#shared/lib/plugins/modalManager.js";
 import { ApiClient } from "#shared/lib/services/ApiClient.js";
 import { StoreService } from "#shared/lib/services/StoreService.js";
 import { ChoiceSelectModel } from "#shared/ui/CustomSelect/model/index.js";
@@ -31,19 +31,7 @@ Promise.all([initMSW(), domReady()]).then(() => {
   window.App = {};
   new ChoiceSelectModel();
   window.App.ChoiceSelectModel = ChoiceSelectModel;
-  new MapApp(new StoreService("mapAppStore"), new ApiClient(API_URL));
-
-  setTimeout(() => {
-    const modalManager = ModalManager.getInstance({
-      animationClass: "slide",
-    });
-
-    modalManager.openConfirmModal({
-      message: "Сохранить изменения?",
-      onConfirm: () => console.debug("Подтверждено!"),
-      onCancel: () => console.debug("Отменено!"),
-    });
-
-    // modalManager.open("#modalSuccess", { type: "inline" });
-  }, 2000);
+  window.App.StoreServiceForMap = new StoreService("mapAppStore");
+  new MapApp(window.App.StoreServiceForMap, new ApiClient(API_URL));
+  new DeleteMarkModel(window.App.StoreServiceForMap);
 });
