@@ -19,7 +19,7 @@ export const getUpdateMarkModalContent = ({
   iconColor = "var(--colorBlack)",
 }) => {
   return `<div class="updateModalContent" >
-  <form data-js-form=${JSON.stringify({ url, method, showModalAfterSuccess: "#modalSuccess", redirectUrlAfterSuccess: "/test.html", delayBeforeRedirect: 3000 })}>
+  <form data-js-form=${JSON.stringify({ url, method, showModalAfterSuccess: "#modalSuccess" })}>
     <h3>Редактировать метку</h3>
     <p>${markInfo.title}</p>
     <div>
@@ -43,7 +43,7 @@ export const getUpdateMarkModalContent = ({
           searchEnabled: false,
           choices: [
             {
-              value: "bars",
+              value: "Бар",
               label: "Бар",
               selected: markInfo.type === "bars",
               customProperties: {
