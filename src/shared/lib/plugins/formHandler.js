@@ -10,15 +10,16 @@ export class FormHandler {
     form: "data-js-form",
   };
 
-  constructor() {
+  constructor(apiClient) {
     if (FormHandler.instance) return FormHandler.instance;
+    this.apiClient = apiClient;
     this.#bindEvents();
     FormHandler.instance = this;
   }
 
-  static getInstance() {
+  static getInstance(apiClient) {
     if (!FormHandler.instance) {
-      FormHandler.instance = new FormHandler();
+      FormHandler.instance = new FormHandler(apiClient);
     }
     return FormHandler.instance;
   }
@@ -26,7 +27,7 @@ export class FormHandler {
   #handleSubmit(e) {
     const { target, submitter } = e;
     if (!target.hasAttribute(`${this.attrs.form}`)) return;
-    if (!target.tagName.toLowerCase() === "form") return;
+    if (target.tagName.toLowerCase() !== "form") return;
 
     const cfg = JSON.parse(target.getAttribute(this.attrs.form));
     const {
@@ -37,18 +38,23 @@ export class FormHandler {
       redirectUrlAfterSuccess,
       delayBeforeRedirect,
     } = cfg;
-    const data = new FormData(target);
+
+    // Создание FormData
+    const formData = new FormData(target);
+
+    // Преобразование FormData в объект для ApiClient
+    const formObject = Object.fromEntries(formData.entries());
 
     if (preventDefault) {
       e.preventDefault();
     }
 
     submitter.disabled = true;
-    //TODO: а что делать с get запросами?) сериализация в url + лучше использовать APICLIENT
-    fetch(url, {
-      method,
-      body: data,
-    })
+
+    const apiMethod = method.toUpperCase() === "GET" ? "get" : "post";
+
+    // Использование ApiClient
+    this.apiClient[apiMethod](url, formObject)
       .then((res) => {
         if (showModalAfterSuccess) {
           ModalManager.getInstance().closeAll();
@@ -56,6 +62,7 @@ export class FormHandler {
             type: "inline",
           });
         }
+
         if (redirectUrlAfterSuccess) {
           if (delayBeforeRedirect) {
             setTimeout(() => {
@@ -65,6 +72,9 @@ export class FormHandler {
             location.href = redirectUrlAfterSuccess;
           }
         }
+      })
+      .catch((err) => {
+        console.error("Ошибка отправки формы:", err);
       })
       .finally(() => {
         submitter.disabled = false;

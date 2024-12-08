@@ -41,5 +41,5 @@ Promise.all([initMSW(), domReady()]).then(() => {
   new MapApp(window.App.StoreServiceForMap, new ApiClient(API_URL));
   new DeleteMarkModel(window.App.StoreServiceForMap);
   new UpdateMarkModel(window.App.StoreServiceForMap);
-  new FormHandler();
+  new FormHandler(new ApiClient(API_URL));
 });
