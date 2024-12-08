@@ -7,6 +7,7 @@ import {
   iconShapeCfg as defaultIconShapeCfg,
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
+import { Balloon } from "#entities/Balloon/index.js";
 import { DeleteMarkBtn } from "#features/Marks/DeleteMark/index.js";
 import { UpdateMarkBtn } from "#features/Marks/UpdateMark/index.js";
 import { getExternalScript } from "#shared/lib/utils/getExternalScript";
@@ -235,30 +236,13 @@ export class YandexMap {
 
   //измененная верстка при клике
   getLayoutContentForBallon(id, info) {
-    const {
-      type,
-      title,
-      address: { city, house, street },
-    } = info;
-    const slides = info.images
-      .map(
-        (image, index) =>
-          `<div class="swiper-slide"><img src="${image}" alt="${info.title} - Slide ${index + 1}"></div>`
-      )
-      .join("");
-    //TODO накинуть стили и вынести в отдельный entities/ballon
-    return `<div class="swiper">
-              <div class="swiper-wrapper">
-                ${slides}
-              </div>
-              <div class="swiper-pagination"></div>
-            </div>
-            <h3 class="yandexMap__header">${title}</h3>
-            <div>${this.iconsPresets[type]}</div>
-            <p>${city},${street}, ${house}</p>
-            ${UpdateMarkBtn({ markInfo: info })}
-            ${DeleteMarkBtn({ markId: id })}
-            `;
+    return Balloon({
+      id,
+      info,
+      iconsPresets: this.iconsPresets,
+      UpdateFeatureSlot: UpdateMarkBtn,
+      DeleteFeatureSlot: DeleteMarkBtn,
+    });
   }
 
   //рендерим метки

@@ -10,6 +10,7 @@ import {
 
 /**
  * Контент модалки обновления метки
+ * @return
  */
 export const getUpdateMarkModalContent = ({
   markInfo,

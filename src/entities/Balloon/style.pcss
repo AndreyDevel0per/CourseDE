@@ -1,0 +1,50 @@
+.balloon {
+  --balloonHeaderFontSize: 2.5rem;
+  --baolloonTextPaddingTop: 2rem;
+  --balloonTextPaddingLeft: 2rem;
+  --balloonFontSize: 1.75rem;
+  --balloonTextMaxWidth: 32rem;
+  --balloonHeaderFontWeight: 700;
+  --balloonHeaderPaddingBottom: 1rem;
+  --balloonTypeGap: 1.5rem;
+  --balloonTypePaddingBottom: 1rem;
+  --balloonAddressPaddingBottom: 2.5rem;
+  --balloonCommentPaddingBottom: 2rem;
+  --balloonButtonsPadding: 0.5rem;
+
+  &__text {
+    padding-top: var(--baolloonTextPaddingTop);
+    padding-left: var(--balloonTextPaddingLeft);
+    font-size: var(--balloonFontSize);
+    max-width: var(--balloonTextMaxWidth);
+  }
+
+  &__header {
+    font-size: var(--balloonHeaderFontSize);
+    font-weight: var(--balloonHeaderFontWeight);
+    padding-bottom: var(--balloonHeaderPaddingBottom);
+  }
+
+  &__type {
+    display: flex;
+    gap: var(--balloonTypeGap);
+    padding-bottom: var(--balloonTypePaddingBottom);
+  }
+
+  &__address {
+    padding-bottom: var(--balloonAddressPaddingBottom);
+  }
+
+  &__comment {
+    padding-bottom: var(--balloonCommentPaddingBottom);
+  }
+
+  &__buttons {
+    margin: auto;
+    padding-left: var(--balloonButtonsPadding);
+    padding-right: var(--balloonButtonsPadding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

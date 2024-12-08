@@ -10,7 +10,6 @@
   --yandexMapMarginLeft: 16.875rem;
   --yandexMapBorderRadius: 5rem;
   --yandexMapBallonContentWidth: 37.5rem;
-  --ynadexMapFontSize: 2.5rem;
   --yandexMapHintWidth: 54rem;
   --yandexMapHintHeight: 25.25rem;
   --yandexMapHintBorderRadius: 2rem;
@@ -19,6 +18,7 @@
   --yandexMapHintSvgPb: 1.875rem;
   --yandexMapTextWidth: 40.125rem;
   --yandexMapLineHeight: 3rem;
+  --ynadexMapFontSize: 2.5rem;
   position: relative;
   width: var(--yandexMapWidth);
   height: var(--yandexMapHeight);
@@ -56,12 +56,13 @@
     box-shadow: var(--boxShadowDefault);
   }
 
-  &__ballonContent {
-    max-width: var(--yandexMapBallonContentWidth);
+  /* stylelint-disable-next-line selector-type-no-unknown */
+  &__ballonLayout ymaps {
+    overflow: visible !important;
   }
 
-  &__header {
-    font-size: var(--ynadexMapFontSize);
+  &__ballonContent {
+    max-width: var(--yandexMapBallonContentWidth);
   }
 
   &__centerMarker {
