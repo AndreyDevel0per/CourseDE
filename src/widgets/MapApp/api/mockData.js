@@ -1,10 +1,45 @@
+export const filterCfg = {
+  inputs: {
+    search: {
+      value: null,
+      isChecked: "null",
+      isDisabled: "null",
+    },
+    bars: {
+      value: null,
+      isChecked: true,
+      isDisabled: false,
+    },
+    restaurant: {
+      value: null,
+      isChecked: true,
+      isDisabled: false,
+    },
+    club: {
+      value: null,
+      isChecked: true,
+      isDisabled: false,
+    },
+    theatre: {
+      value: null,
+      isChecked: true,
+      isDisabled: false,
+    },
+    cinema: {
+      value: null,
+      isChecked: true,
+      isDisabled: false,
+    },
+  },
+};
+
 export const listMarksMockResponse = {
   marks: [
-    { id: "1", type: "bars", cords: [53.5, 58.9] },
-    { id: "2", type: "restaurant", cords: [54.5, 57.9] },
-    { id: "3", type: "club", cords: [53.5, 57.9] },
-    { id: "4", type: "theatre", cords: [52.5, 57.9] },
-    { id: "5", type: "cinema", cords: [51.5, 57.9] },
+    { id: "1", type: "bars", cords: [55.134, 61.4291] },
+    { id: "2", type: "restaurant", cords: [55.143, 61.4241] },
+    { id: "3", type: "club", cords: [55.153, 61.4399] },
+    { id: "4", type: "theatre", cords: [55.144, 61.4281] },
+    { id: "5", type: "cinema", cords: [55.174, 61.4151] },
   ],
 };
 
@@ -100,38 +135,3 @@ export const markDetail = [
     ],
   },
 ];
-
-export const filterCfg = {
-  inputs: {
-    search: {
-      value: null,
-      isChecked: "null",
-      isDisabled: "null",
-    },
-    bars: {
-      value: null,
-      isChecked: false,
-      isDisabled: false,
-    },
-    restaurant: {
-      value: null,
-      isChecked: false,
-      isDisabled: false,
-    },
-    club: {
-      value: null,
-      isChecked: false,
-      isDisabled: false,
-    },
-    theatre: {
-      value: null,
-      isChecked: true,
-      isDisabled: false,
-    },
-    cinema: {
-      value: null,
-      isChecked: false,
-      isDisabled: false,
-    },
-  },
-};

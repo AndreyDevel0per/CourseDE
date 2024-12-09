@@ -20,8 +20,8 @@ export class MapApp {
       apiUrl: "https://api-maps.yandex.ru/2.1/?apikey",
       apiKey: this.apiKey,
       lang: "ru_RU",
-      center: [56.5, 57.9],
-      zoom: 10,
+      center: [55.154, 61.4291],
+      zoom: 13,
     });
 
     this.filterManager = new FilterManager({
