@@ -3,6 +3,7 @@ import { PlaceSwitchGroup } from "#features/PlaceSwitchGroup";
 import { CreateRouteBtn } from "#features/Routes/CreateRoute";
 import { GetRoutesBtn } from "#features/Routes/GetRoutes";
 import { Map } from "#shared/ui/Map/ui/Map";
+import { ModalSuccess } from "#shared/ui/ModalSuccess";
 
 /**
  * Страница приложения
@@ -30,14 +31,7 @@ const IndexPage = () => `
           </div>
         </div>
       </main>
-      <div style="display: none">
-        <div id="modalSuccess">
-            <p>Успешно!</p>
-        </div>
-        <div id="modalError">
-          <p>Не успешно!</p>
-        </div>
-      </div>
+      ${ModalSuccess()}
     </body>
   </html>
 `;

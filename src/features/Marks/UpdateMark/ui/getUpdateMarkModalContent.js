@@ -6,6 +6,7 @@ import {
   MusicIcon,
   TheatreIcon,
   BarIcon,
+  SaveIcon,
 } from "#shared/ui/Icons/index";
 
 /**
@@ -55,7 +56,7 @@ export const getUpdateMarkModalContent = ({
                 label: "Ресторан",
                 selected: markInfo.type === "restaurant",
                 customProperties: {
-                  icon: RestIcon({ iconColor: "var(--colorRed)" }),
+                  icon: RestIcon({ iconColor: "var(--colorOrange)" }),
                 },
               },
               {
@@ -63,7 +64,7 @@ export const getUpdateMarkModalContent = ({
                 label: "Ночной клуб",
                 selected: markInfo.type === "trk",
                 customProperties: {
-                  icon: MusicIcon({ iconColor: "var(--colorRed)" }),
+                  icon: MusicIcon({ iconColor: "var(--colorBlue)" }),
                 },
               },
               {
@@ -71,7 +72,7 @@ export const getUpdateMarkModalContent = ({
                 label: "Театр",
                 selected: markInfo.type === "theatre",
                 customProperties: {
-                  icon: TheatreIcon({ iconColor: "var(--colorRed)" }),
+                  icon: TheatreIcon({ iconColor: "var(--colorPurple)" }),
                 },
               },
               {
@@ -79,7 +80,7 @@ export const getUpdateMarkModalContent = ({
                 label: "Кино",
                 selected: markInfo.type === "cinema",
                 customProperties: {
-                  icon: CinemaIcon({ iconColor: "var(--colorPrimary)" }),
+                  icon: CinemaIcon({ iconColor: "var(--colorGreenDark)" }),
                 },
               },
             ],
@@ -89,20 +90,12 @@ export const getUpdateMarkModalContent = ({
       </div>
       <div class="updateModalContent__comment">
         <h4>Комментарий пользователя</h4>
-        <textarea type="comment" value="${markInfo.comment}" name="comment"> </textarea>
+        <textarea type="comment" name="comment">${markInfo.comment}</textarea>
       </div>
-      <div>
-      ${Button({
-        text: "Отмена",
-        extraAttrs: [
-          {
-            name: "type",
-            value: "submit",
-          },
-        ],
-      })}
+      <div class="updateModalContent__button">
       ${Button({
         text: "Сохранить",
+        iconSlot: SaveIcon(),
         extraAttrs: [
           {
             name: "type",

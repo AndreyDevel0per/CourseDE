@@ -10,5 +10,6 @@ export { NewRouteIcon } from "./ui/NewRouteIcon.js";
 export { PencilIcon } from "./ui/PencilIcon.js";
 export { RestIcon } from "./ui/RestIcon.js";
 export { RouteIcon } from "./ui/RouteIcon.js";
+export { SaveIcon } from "./ui/SaveIcon.js";
 export { SearchIcon } from "./ui/SearchIcon.js";
 export { TheatreIcon } from "./ui/TheatreIcon.js";
