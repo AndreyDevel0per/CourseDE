@@ -1,0 +1,82 @@
+.updateModalContent {
+  --updateModalContentMinWidth: 57.125rem;
+  --updateModalContentBorderRadius: 2rem;
+  --updateModalContentFontSize: 1.75rem;
+  --updateModalContentContainerPl: 2rem;
+  --updateModalContentContainerPt: 6rem;
+  --updateModalContentHeaderFontSize: 2.5rem;
+  --updateModalContentHeaderFontWeight: 700;
+  --updateModalContentHeaderPb: 4rem;
+  --updateModalContentAddressFontSize: 1.75rem;
+  --updateModalContentAdressPaddingBottom: 4rem;
+  --updateModalContentTypeGap: 5.375rem;
+  --updateModalContentTypePaddingBottom: 2rem;
+  --updateModalContentTypeFontSize: 1.75rem;
+  --updateModalContentSelectWidth: 34.875rem;
+  --updateModalContentCommentPb: 4rem;
+  --updateModalContentCommentWidth: 14.25rem;
+  --updateModalContentInputWidth: 34.875rem;
+  --updateModalContentInputHeight: 14.5rem;
+  --updateModalContentInputBorderRadius: 1rem;
+  --updateModalContentInputPl: 2rem;
+  --updateModalContentInputPt: 1.5rem;
+  min-width: var(--updateModalContentMinWidth);
+  min-height: fit-content;
+  border-radius: var(--updateModalContentBorderRadius);
+
+  &__container {
+    padding-left: var(--updateModalContentContainerPl);
+    padding-top: var(--updateModalContentContainerPt);
+    font-size: var(--updateModalContentFontSize);
+  }
+
+  &__header {
+    font-size: var(--updateModalContentHeaderFontSize);
+    font-weight: var(--updateModalContentHeaderFontWeight);
+    padding-bottom: var(--updateModalContentHeaderPb);
+  }
+
+  &__address {
+    font-size: var(--updateModalContentAddressFontSize);
+    padding-bottom: var(--updateModalContentAdressPaddingBottom);
+  }
+
+  &__type {
+    display: flex;
+    gap: var(--updateModalContentTypeGap);
+    align-items: center;
+    padding-bottom: var(--updateModalContentTypePaddingBottom);
+  }
+
+  &__type h4 {
+    font-size: var(--updateModalContentTypeFontSize);
+  }
+
+  &__select {
+    width: var(--updateModalContentSelectWidth);
+  }
+
+  &__comment {
+    display: flex;
+    align-items: center;
+    padding-bottom: var(--updateModalContentCommentPb);
+  }
+
+  &__comment h4 {
+    width: var(--updateModalContentCommentWidth);
+  }
+
+  &__comment textarea {
+    width: var(--updateModalContentInputWidth);
+    height: var(--updateModalContentInputHeight);
+    border-radius: var(--updateModalContentInputBorderRadius);
+    background-color: var(--colorAntiFlashWhite);
+    padding-left: var(--updateModalContentInputPl);
+    padding-top: var(--updateModalContentInputPt);
+    resize: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

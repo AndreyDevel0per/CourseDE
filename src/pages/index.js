@@ -21,10 +21,14 @@ const IndexPage = () => `
       </header>
       <main>
         ${PlaceSwitchGroup()}
-        ${Map()}
-        ${CreateMarkBtn()}
-        ${CreateRouteBtn()}
-        ${GetRoutesBtn()}
+        <div class="isFlex">
+          ${Map()}
+          <div class="isFlexColoumn ml28">
+            ${CreateMarkBtn()}
+            ${CreateRouteBtn()}
+            ${GetRoutesBtn()}
+          </div>
+        </div>
       </main>
       <div style="display: none">
         <div id="modalSuccess">
