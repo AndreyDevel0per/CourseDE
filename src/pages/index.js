@@ -25,7 +25,7 @@ const IndexPage = () => `
         <div class="isFlex">
           ${Map()}
           <div class="isFlexColoumn ml28">
-            ${CreateMarkBtn()}
+            ${CreateMarkBtn({})}
             ${CreateRouteBtn()}
             ${GetRoutesBtn()}
           </div>

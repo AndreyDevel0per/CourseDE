@@ -1,4 +1,5 @@
 import "./styles.js";
+import { CreateMarkModel } from "#features/Marks/CreateMark/model/index.js";
 import { DeleteMarkModel } from "#features/Marks/DeleteMark/model/index.js";
 import { UpdateMarkModel } from "#features/Marks/UpdateMark/model/index.js";
 import { API_URL } from "#shared/config/constants";
@@ -42,4 +43,5 @@ Promise.all([initMSW(), domReady()]).then(() => {
   new DeleteMarkModel(window.App.StoreServiceForMap);
   new UpdateMarkModel(window.App.StoreServiceForMap);
   new FormHandler(new ApiClient(API_URL));
+  new CreateMarkModel(new ApiClient(API_URL));
 });

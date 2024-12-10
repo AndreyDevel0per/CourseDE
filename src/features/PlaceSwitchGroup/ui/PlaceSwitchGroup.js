@@ -1,7 +1,7 @@
 import { switchConfigDefault } from "../config/index.js";
 import { getGeneratedAttrs } from "#shared/lib/utils";
-import { Switch } from "#shared/ui/Switch";
 import { SearchIcon } from "#shared/ui/Icons/index.js";
+import { Switch } from "#shared/ui/Switch";
 
 /**
  * Компонент PlaceSwitchGroup с прокидываемым конфигом

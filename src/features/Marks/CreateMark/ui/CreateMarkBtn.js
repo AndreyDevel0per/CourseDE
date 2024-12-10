@@ -4,9 +4,16 @@ import { RouteIcon } from "#shared/ui/Icons";
 /**
  * Кнопка добавления метки
  */
-export const CreateMarkBtn = () =>
-  Button({
-    text: "Добавить метку",
+export const CreateMarkBtn = ({ markInfo = "", text = "Добавить метку" }) => {
+  return Button({
+    markInfo,
+    text,
     iconSlot: RouteIcon(),
-    extraAttrs: [],
+    extraAttrs: [
+      {
+        name: "data-js-create-mark-info",
+        value: markInfo,
+      },
+    ],
   });
+};
