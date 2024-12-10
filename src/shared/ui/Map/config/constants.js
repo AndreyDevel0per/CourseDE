@@ -31,6 +31,13 @@ export const iconsPresets = {
   centerMarker: CenterMapIcon({ iconColor: "var(--colorGray)" }),
 };
 
+export const mapCfg = {
+  apiUrl: "https://api-maps.yandex.ru/2.1/?apikey",
+  lang: "ru_RU",
+  zoom: 10,
+  center: [55.751574, 37.573856],
+};
+
 export const yandexMapCustomEventNames = {
   markClicked: "yandexMap::markClicked",
 };

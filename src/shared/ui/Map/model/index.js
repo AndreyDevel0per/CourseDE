@@ -5,6 +5,7 @@ import {
   classNames as defaultClassNames,
   yandexMapCustomEventNames,
   iconShapeCfg as defaultIconShapeCfg,
+  mapCfg,
 } from "../config/constants.js";
 import { checkMapInstance } from "../config/lib/checkMapInstance.js";
 import { Balloon } from "#entities/Balloon/index.js";
@@ -20,10 +21,10 @@ export class YandexMap {
   constructor({
     containerSelector,
     apiKey,
-    center = [55.751574, 37.573856],
-    zoom = 10,
-    lang = "ru_RU",
-    apiUrl = "https://api-maps.yandex.ru/2.1/?apikey",
+    center = mapCfg.center,
+    zoom = mapCfg.zoom,
+    lang = mapCfg.lang,
+    apiUrl = mapCfg.apiUrl,
     classNames,
     iconShapeCfg,
   }) {

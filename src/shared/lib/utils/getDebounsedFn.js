@@ -1,18 +1,15 @@
 /**
  *
  */
-export function getDebouncedFn(func, delay, immediate = false) {
+export function getDebouncedFn(func, delay = 500) {
   let timeout;
   return function (...args) {
     const context = this;
-    const callNow = immediate && !timeout;
 
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       timeout = null;
-      if (!immediate) func.apply(context, args);
+      func.apply(context, args);
     }, delay);
-
-    if (callNow) func.apply(context, args);
   };
 }

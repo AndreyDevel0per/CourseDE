@@ -1,3 +1,4 @@
+import { MapAppCfg, yandexMapCfg } from "../config/constants.js";
 import { FilterManager } from "#features/Filter/model";
 import { API_ENDPOINTS } from "#shared/config/constants";
 import { getDebouncedFn } from "#shared/lib/utils";
@@ -11,17 +12,13 @@ export class MapApp {
   constructor(storeService, apiClient) {
     this.storeService = storeService;
     this.apiClient = apiClient;
-    this.apiGeoUrl = "https://geocode-maps.yandex.ru/1.x/?apikey";
-    this.apiKey = "fb0fc35c-8194-4428-82e5-fb1f701058f3";
+    this.apiGeoUrl = MapAppCfg.apiGeoUrl;
+    this.apiKey = MapAppCfg.apiKey;
     this.inputAddress = document.querySelector("#searchAddress");
 
     this.yandexMap = new YandexMap({
-      containerSelector: "#map1",
-      apiUrl: "https://api-maps.yandex.ru/2.1/?apikey",
+      ...yandexMapCfg,
       apiKey: this.apiKey,
-      lang: "ru_RU",
-      center: [55.154, 61.4291],
-      zoom: 13,
     });
 
     this.filterManager = new FilterManager({
