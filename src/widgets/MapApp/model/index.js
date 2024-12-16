@@ -152,6 +152,10 @@ export class MapApp {
       });
   }
 
+  handleCreateMark() {
+    // this.yandexMap.addMark();
+  }
+
   async getFiltersCfg() {
     return this.apiClient
       .get(API_ENDPOINTS.config.list)
@@ -177,5 +181,9 @@ export class MapApp {
       this.inputAddress.addEventListener("input", (e) => {
         debouncedHandleMapByAddress(e.target.value);
       });
+
+    document.addEventListener(yandexMapCustomEventNames.markCreated, (e) => {
+      this.handleCreateMark(e.detail);
+    });
   }
 }

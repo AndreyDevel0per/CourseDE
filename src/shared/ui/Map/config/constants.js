@@ -40,4 +40,5 @@ export const mapCfg = {
 
 export const yandexMapCustomEventNames = {
   markClicked: "yandexMap::markClicked",
+  markCreated: "mark::created",
 };

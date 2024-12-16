@@ -35,4 +35,9 @@ export const handlers = [
     endpoint: API_ENDPOINTS.marks.update,
     data: {},
   }),
+  getResponseMock({
+    type: "POST",
+    endpoint: API_ENDPOINTS.marks.create,
+    data: {},
+  }),
 ];

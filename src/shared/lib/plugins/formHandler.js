@@ -56,6 +56,8 @@ export class FormHandler {
     // Использование ApiClient
     this.apiClient[apiMethod](url, formObject)
       .then((res) => {
+        console.debug("!!!!!!!!!!!!!!!!", formObject, url);
+        if (url === "marks/create/") this.#notifyCreate(formObject);
         if (showModalAfterSuccess) {
           ModalManager.getInstance().closeAll();
           ModalManager.getInstance().open(showModalAfterSuccess, {
@@ -79,6 +81,14 @@ export class FormHandler {
       .finally(() => {
         submitter.disabled = false;
       });
+  }
+
+  #notifyCreate(formObject) {
+    console.debug("mark created", formObject);
+    const event = new CustomEvent("mark::created", {
+      detail: formObject,
+    });
+    window.document.dispatchEvent(event);
   }
 
   #bindEvents() {
